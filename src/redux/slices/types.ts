@@ -11,6 +11,13 @@ export enum GamePhaseEnum {
   GAME_OVER = 'GAME_OVER',
 }
 
+export type GameStateProps = {
+  currentPhase: GamePhaseEnum;
+  aiColumnPoints: number[];
+  userColumnPoints: number[];
+  currentUser: 'user' | 'ai' | null;
+};
+
 export type CellPosition = {
   x: number;
   y: number;

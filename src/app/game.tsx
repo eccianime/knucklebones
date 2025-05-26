@@ -1,17 +1,16 @@
 import DiceBoard from '../components/DiceBoard';
+import DiceBox from '../components/DiceBox';
+import FirstTurnModal from '../components/FirstTurnModal';
 import GameBackground from '../components/GameBackground';
-import { useAppSelector } from '../redux/store';
 
 export default function Game() {
-  const { aiCellPositions, playerCellPosition } = useAppSelector(
-    (state) => state.internal
-  );
-  console.log(aiCellPositions, playerCellPosition);
-
   return (
     <GameBackground>
+      <DiceBox type='ai' />
       <DiceBoard type='ai' />
       <DiceBoard type='user' />
+      <DiceBox type='user' />
+      <FirstTurnModal />
     </GameBackground>
   );
 }

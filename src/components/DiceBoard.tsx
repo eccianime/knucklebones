@@ -1,19 +1,22 @@
 import { useRef } from 'react';
 import { findNodeHandle, UIManager, View } from 'react-native';
+import { DICE_SPACE_WIDTH } from '../config/utils';
 import { setCellPosition } from '../redux/slices/internal';
 import { CellPosition } from '../redux/slices/types';
-import { useAppDispatch } from '../redux/store';
+import { useAppDispatch, useAppSelector } from '../redux/store';
+import DiceColumnPoints from './DiceColumnPoints';
 import { DiceBoardProps } from './types';
-
-const DICE_SPACE_WIDTH = 60;
 
 type CellRefMap = Record<string, View | null>;
 
 export default function DiceBoard({ type }: DiceBoardProps) {
+  const { userColumnPoints, aiColumnPoints } = useAppSelector(
+    (state) => state.game
+  );
+  const dispatch = useAppDispatch();
+
   const rows = 3;
   const cols = 3;
-
-  const dispatch = useAppDispatch();
 
   const cellRefs = useRef<CellRefMap>({});
 
@@ -23,8 +26,7 @@ export default function DiceBoard({ type }: DiceBoardProps) {
     const node = ref ? findNodeHandle(ref) : null;
 
     if (node) {
-      UIManager.measureInWindow(node, (x, y, width, height) => {
-        console.log(`Posición absoluta de ${type} cell-${key}:`, x, y);
+      UIManager.measureInWindow(node, (x, y) => {
         const position: CellPosition = { x, y };
         dispatch(setCellPosition({ type, row, col, position }));
       });
@@ -34,9 +36,10 @@ export default function DiceBoard({ type }: DiceBoardProps) {
   return (
     <View className='items-center flex-1'>
       <View
-        className={`absolute ${type === 'ai' ? 'top-[180]' : 'bottom-[180]'}`}
+        className={`absolute ${type === 'ai' ? 'top-[150]' : 'bottom-[150]'}`}
       >
         <View className='gap-1'>
+          {type === 'user' && <DiceColumnPoints points={userColumnPoints} />}
           {Array.from({ length: rows }).map((_, row) => (
             <View key={`row-${row}`} className='flex-row gap-3'>
               {Array.from({ length: cols }).map((_, col) => (
@@ -47,11 +50,15 @@ export default function DiceBoard({ type }: DiceBoardProps) {
                   }}
                   className='bg-primary-400'
                   onLayout={() => handleMeasureCell(row, col, type)}
-                  style={{ width: DICE_SPACE_WIDTH, height: DICE_SPACE_WIDTH }}
+                  style={{
+                    width: DICE_SPACE_WIDTH + 10,
+                    height: DICE_SPACE_WIDTH,
+                  }}
                 />
               ))}
             </View>
           ))}
+          {type === 'ai' && <DiceColumnPoints points={aiColumnPoints} />}
         </View>
       </View>
     </View>

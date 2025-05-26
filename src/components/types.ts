@@ -12,3 +12,11 @@ export type GameBackgroundProps = {
 export type DiceBoardProps = {
   type: 'ai' | 'user';
 };
+
+export type DiceColumnPointsProps = {
+  points: number[];
+};
+
+export type DiceBoxProps = {
+  type: 'ai' | 'user';
+};

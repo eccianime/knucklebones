@@ -1,12 +1,19 @@
+import { router } from 'expo-router';
 import { ImageBackground, StatusBar, Text, View } from 'react-native';
 
-import { router } from 'expo-router';
 import HomeImage from '../assets/images/home.png';
+
 import RibbonButton from '../components/RibbonButton';
 
+import { selectFirstPlayer } from '../redux/actions/game';
+import { useAppDispatch } from '../redux/store';
+
 export default function Index() {
+  const dispatch = useAppDispatch();
+
   const handlePressPlay = () => {
     router.push('/game');
+    dispatch(selectFirstPlayer());
   };
 
   const handlePressHowTo = () => {
