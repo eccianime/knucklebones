@@ -1,57 +1,31 @@
 import { ImageBackground, StatusBar, Text, View } from 'react-native';
 
-import { router, useFocusEffect } from 'expo-router';
-import { useCallback, useState } from 'react';
-import SplashImage from '../assets/images/splash.png';
+import { router } from 'expo-router';
+import HomeImage from '../assets/images/home.png';
 import RibbonButton from '../components/RibbonButton';
 
 export default function Index() {
-  const [currentSelected, setCurrentSelected] = useState(0);
-
   const handlePressPlay = () => {
-    setCurrentSelected(0);
-    setTimeout(() => {
-      router.push('/game');
-    }, 500);
-  };
-
-  const handlePressHowTo = () => {
-    setCurrentSelected(1);
-    router.push('/how-to-play');
-  };
-
-  const handleQuit = () => {
-    setCurrentSelected(2);
     router.push('/game');
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      setCurrentSelected(0);
-    }, [])
-  );
+  const handlePressHowTo = () => {
+    router.push('/how-to-play');
+  };
+
+  const handlePressAbout = () => {
+    router.push('/about');
+  };
 
   return (
-    <ImageBackground source={SplashImage} className='flex-1'>
+    <ImageBackground source={HomeImage} className='flex-1'>
       <StatusBar barStyle={'light-content'} />
       <View className='absolute top-[50%] self-center'>
-        <RibbonButton
-          onPress={handlePressPlay}
-          isSelected={currentSelected === 0}
-          title='Play'
-        />
-        <RibbonButton
-          onPress={handlePressHowTo}
-          isSelected={currentSelected === 1}
-          title='How to Play'
-        />
-        <RibbonButton
-          onPress={handleQuit}
-          isSelected={currentSelected === 2}
-          title='Quit'
-        />
+        <RibbonButton onPress={handlePressPlay} isSelected title='Play' />
+        <RibbonButton onPress={handlePressHowTo} title='How to Play' />
+        <RibbonButton onPress={handlePressAbout} title='About' />
       </View>
-      <Text className='absolute bottom-0 mb-6 font-LaptureSemiBold text-primary-200 self-center text-2xl'>
+      <Text className='absolute bottom-0 mb-10 font-LaptureSemiBold text-primary-200 self-center text-2xl'>
         v.{'1.0.0'}
       </Text>
     </ImageBackground>
