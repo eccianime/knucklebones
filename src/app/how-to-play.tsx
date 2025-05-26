@@ -1,18 +1,12 @@
 import { router } from 'expo-router';
 import { useRef, useState } from 'react';
-import {
-  Dimensions,
-  FlatList,
-  Image,
-  ImageBackground,
-  Text,
-  View,
-} from 'react-native';
+import { FlatList, Image, ImageBackground, Text, View } from 'react-native';
 import BackgroundImage from '../assets/images/bg.png';
 import HowTo1Image from '../assets/images/how_to_1.png';
 import HowTo2Image from '../assets/images/how_to_2.png';
 import TitleImage from '../assets/images/how_to_title.png';
 import RibbonButton from '../components/RibbonButton';
+import { SCREEN_WIDTH } from '../config/utils';
 
 const instructionData = [
   {
@@ -27,7 +21,7 @@ const instructionData = [
 ];
 
 export default function HowToPlay() {
-  const containerWidth = Dimensions.get('screen').width - 48;
+  const containerWidth = SCREEN_WIDTH - 48;
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollRef = useRef<FlatList>(null);
 
@@ -51,7 +45,11 @@ export default function HowToPlay() {
   };
 
   return (
-    <ImageBackground source={BackgroundImage} className='flex-1 p-6'>
+    <ImageBackground
+      resizeMode='cover'
+      source={BackgroundImage}
+      className='flex-1 p-6'
+    >
       <Image source={TitleImage} className='my-[50] mx-auto h-[50] w-[300]' />
       <FlatList
         data={instructionData}

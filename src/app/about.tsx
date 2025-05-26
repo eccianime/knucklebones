@@ -14,7 +14,11 @@ import RibbonButton from '../components/RibbonButton';
 export default function About() {
   const handleGoBack = () => router.back();
   return (
-    <ImageBackground source={BackgroundImage} className='flex-1 p-6 '>
+    <ImageBackground
+      resizeMode='cover'
+      source={BackgroundImage}
+      className='flex-1 p-6 '
+    >
       <Image
         source={TitleAboutImage}
         className='mt-12 mb-5 mx-auto h-[50] w-[230]'

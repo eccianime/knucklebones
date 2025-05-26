@@ -18,7 +18,7 @@ export default function Index() {
   };
 
   return (
-    <ImageBackground source={HomeImage} className='flex-1'>
+    <ImageBackground resizeMode='cover' source={HomeImage} className='flex-1'>
       <StatusBar barStyle={'light-content'} />
       <View className='absolute top-[50%] self-center'>
         <RibbonButton onPress={handlePressPlay} isSelected title='Play' />
