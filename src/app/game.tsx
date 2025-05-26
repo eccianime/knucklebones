@@ -1,9 +1,17 @@
-import { Text, View } from 'react-native';
+import DiceBoard from '../components/DiceBoard';
+import GameBackground from '../components/GameBackground';
+import { useAppSelector } from '../redux/store';
 
 export default function Game() {
+  const { aiCellPositions, playerCellPosition } = useAppSelector(
+    (state) => state.internal
+  );
+  console.log(aiCellPositions, playerCellPosition);
+
   return (
-    <View>
-      <Text>Game</Text>
-    </View>
+    <GameBackground>
+      <DiceBoard type='ai' />
+      <DiceBoard type='user' />
+    </GameBackground>
   );
 }
