@@ -1,18 +1,17 @@
 import { useRef } from 'react';
 import { findNodeHandle, UIManager, View } from 'react-native';
-import { DICE_SPACE_WIDTH } from '../config/utils';
+import { calculatePoints, DICE_SPACE_WIDTH } from '../config/utils';
 import { setCellPosition } from '../redux/slices/internal';
 import { CellPosition } from '../redux/slices/types';
-import { useAppDispatch, useAppSelector } from '../redux/store';
+import { useAppDispatch } from '../redux/store';
+import Dice from './Dice';
 import DiceColumnPoints from './DiceColumnPoints';
 import { DiceBoardProps } from './types';
+import UserSelectableArea from './UserSelectableArea';
 
 type CellRefMap = Record<string, View | null>;
 
-export default function DiceBoard({ type }: DiceBoardProps) {
-  const { userColumnPoints, aiColumnPoints } = useAppSelector(
-    (state) => state.game
-  );
+export default function DiceBoard({ type, occupiedColumns }: DiceBoardProps) {
   const dispatch = useAppDispatch();
 
   const rows = 3;
@@ -39,26 +38,36 @@ export default function DiceBoard({ type }: DiceBoardProps) {
         className={`absolute ${type === 'ai' ? 'top-[150]' : 'bottom-[150]'}`}
       >
         <View className='gap-1'>
-          {type === 'user' && <DiceColumnPoints points={userColumnPoints} />}
-          {Array.from({ length: rows }).map((_, row) => (
-            <View key={`row-${row}`} className='flex-row gap-3'>
-              {Array.from({ length: cols }).map((_, col) => (
-                <View
-                  key={`cell-${row}-${col}`}
-                  ref={(ref) => {
-                    cellRefs.current[`${row}-${col}`] = ref;
-                  }}
-                  className='bg-primary-400'
-                  onLayout={() => handleMeasureCell(row, col, type)}
-                  style={{
-                    width: DICE_SPACE_WIDTH + 10,
-                    height: DICE_SPACE_WIDTH,
-                  }}
-                />
-              ))}
-            </View>
-          ))}
-          {type === 'ai' && <DiceColumnPoints points={aiColumnPoints} />}
+          {type === 'user' && (
+            <DiceColumnPoints points={calculatePoints(occupiedColumns)} />
+          )}
+          <UserSelectableArea type={type}>
+            {Array.from({ length: rows }).map((_, row) => (
+              <View key={`row-${row}`} className='flex-row gap-3'>
+                {Array.from({ length: cols }).map((_, col) => (
+                  <View
+                    key={`cell-${row}-${col}`}
+                    ref={(ref) => {
+                      cellRefs.current[`${row}-${col}`] = ref;
+                    }}
+                    className='bg-primary-400 items-center justify-center'
+                    onLayout={() => handleMeasureCell(row, col, type)}
+                    style={{
+                      width: DICE_SPACE_WIDTH + 10,
+                      height: DICE_SPACE_WIDTH,
+                    }}
+                  >
+                    {occupiedColumns[row][col] > 0 && (
+                      <Dice currentNumber={occupiedColumns[row][col]} />
+                    )}
+                  </View>
+                ))}
+              </View>
+            ))}
+          </UserSelectableArea>
+          {type === 'ai' && (
+            <DiceColumnPoints points={calculatePoints(occupiedColumns)} />
+          )}
         </View>
       </View>
     </View>

@@ -23,8 +23,11 @@ export default function About() {
         source={TitleAboutImage}
         className='mt-12 mb-5 mx-auto h-[50] w-[230]'
       />
-      <ScrollView bounces={false} contentContainerClassName='flex-grow pb-6'>
-        <Text className='text-2xl font-LaptureSemiBold text-white'>
+      <ScrollView
+        bounces={false}
+        contentContainerClassName='flex-grow pb-6 mx-4'
+      >
+        <Text className='text-xl font-LaptureSemiBold text-white text-justify'>
           This game is a fan-made project, created for non-commercial purposes.
           It is not affiliated with, endorsed, or sponsored by the creators of
           Cult of the Lamb or its copyright holders.{'\n\n'}
@@ -44,7 +47,7 @@ export default function About() {
           to request removal or modification of any related content.
           {'\n\n'}
           👉 Cult of the Lamb is a registered trademark of Massive Monster and
-          Devolver Digital. Learn more about the official game at
+          Devolver Digital. Learn more about the official game at:{'\n'}
           <Text
             className='text-primary-300'
             onPress={() => Linking.openURL('https://www.cultofthelamb.com/')}

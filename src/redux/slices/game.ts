@@ -1,11 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { GamePhaseEnum, GameStateProps } from './types';
 
+const EMPTY_POINTS = Array(3)
+  .fill(0)
+  .map(() => Array(3).fill(0));
+
 const INITIAL_STATE: GameStateProps = {
   currentPhase: GamePhaseEnum.MENU,
-  aiColumnPoints: [0, 0, 0],
-  userColumnPoints: [0, 0, 0],
-  currentUser: null,
+  currentPlayer: null,
+  isDiceRolling: false,
+  currentDice: null,
+  aiOccupiedColumns: EMPTY_POINTS,
+  userOccupiedColumns: EMPTY_POINTS,
 };
 
 const gameSlice = createSlice({
@@ -17,10 +23,40 @@ const gameSlice = createSlice({
       state.currentPhase = action.payload;
     },
     selectCurrentPlayer: (state, action: PayloadAction<'user' | 'ai'>) => {
-      state.currentUser = action.payload;
+      state.currentPlayer = action.payload;
+    },
+    setIsDiceRolling: (state, action: PayloadAction<boolean>) => {
+      state.isDiceRolling = action.payload;
+    },
+    setCurrentDice: (state, action: PayloadAction<number>) => {
+      state.isDiceRolling = false;
+      state.currentDice = action.payload;
+    },
+    setCellValue: (
+      state,
+      action: PayloadAction<{
+        row: number;
+        col: number;
+        value: number;
+        type: 'ai' | 'user';
+      }>
+    ) => {
+      if (action.payload.type === 'ai') {
+        state.aiOccupiedColumns[action.payload.row][action.payload.col] =
+          action.payload.value;
+      } else {
+        state.userOccupiedColumns[action.payload.row][action.payload.col] =
+          action.payload.value;
+      }
     },
   },
 });
 
-export const { setPhase, selectCurrentPlayer } = gameSlice.actions;
+export const {
+  setPhase,
+  selectCurrentPlayer,
+  setIsDiceRolling,
+  setCurrentDice,
+  setCellValue,
+} = gameSlice.actions;
 export default gameSlice.reducer;

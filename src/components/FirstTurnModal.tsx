@@ -8,7 +8,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { SCREEN_WIDTH } from '../config/utils';
-import { selectCurrentPlayer, setPhase } from '../redux/slices/game';
+import { setCurrentPlayer } from '../redux/actions/game';
 import { GamePhaseEnum } from '../redux/slices/types';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 
@@ -17,7 +17,7 @@ cssInterop(LinearGradient, {
 });
 
 export default function FirstTurnModal() {
-  const { currentPhase, currentUser } = useAppSelector((state) => state.game);
+  const { currentPhase, currentPlayer } = useAppSelector((state) => state.game);
   const dispatch = useAppDispatch();
 
   const xPosition = useSharedValue(SCREEN_WIDTH);
@@ -29,7 +29,7 @@ export default function FirstTurnModal() {
   }));
 
   useEffect(() => {
-    if (currentPhase !== GamePhaseEnum.SELECT_FIRST_PLAYER || !currentUser)
+    if (currentPhase !== GamePhaseEnum.SELECT_FIRST_PLAYER || !currentPlayer)
       return;
 
     xPosition.value = withTiming(0, { duration: 2000 });
@@ -39,8 +39,7 @@ export default function FirstTurnModal() {
       xPosition.value = withTiming(-SCREEN_WIDTH, { duration: 2000 });
       opacity.value = withTiming(0, { duration: 2000 });
 
-      dispatch(setPhase(GamePhaseEnum.SELECT_CURRENT_PLAYER));
-      dispatch(selectCurrentPlayer(currentUser));
+      dispatch(setCurrentPlayer({ currentPlayer }));
     }, 2000);
     return () => clearTimeout(timer);
   }, [currentPhase]);
@@ -62,7 +61,7 @@ export default function FirstTurnModal() {
           end={{ x: 1, y: 0.5 }}
         >
           <Text className={'text-3xl text-white font-LaptureSemiBold'}>
-            {currentUser === 'ai' ? 'AI ROLLS ' : 'YOU ROLL '}FIRST
+            {currentPlayer === 'ai' ? 'AI ROLLS ' : 'YOU ROLL '}FIRST
           </Text>
         </LinearGradient>
       </Animated.View>

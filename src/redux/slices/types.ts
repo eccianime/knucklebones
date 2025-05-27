@@ -3,7 +3,10 @@ export enum GamePhaseEnum {
   SELECT_FIRST_PLAYER = 'SELECT_FIRST_PLAYER',
   SELECT_CURRENT_PLAYER = 'SELECT_CURRENT_PLAYER',
   ROLL_DICE = 'ROLL_DICE',
+  START_AI_BEHAVIOUR = 'START_AI_BEHAVIOUR',
+  USER_BEHAVIOUR = 'USER_BEHAVIOUR',
   SELECT_COLUMN = 'SELECT_COLUMN',
+  PLACE_DICE = 'PLACE_DICE',
   CHECK_DICE_MATCHES = 'CHECK_DICE_MATCHES',
   ELIMINATE_DICE_MATCHES = 'ELIMINATE_DICE_MATCHES',
   CALCULATE_POINTS = 'CALCULATE_POINTS',
@@ -13,9 +16,11 @@ export enum GamePhaseEnum {
 
 export type GameStateProps = {
   currentPhase: GamePhaseEnum;
-  aiColumnPoints: number[];
-  userColumnPoints: number[];
-  currentUser: 'user' | 'ai' | null;
+  currentPlayer: 'user' | 'ai' | null;
+  isDiceRolling: boolean;
+  currentDice: number | null;
+  aiOccupiedColumns: number[][];
+  userOccupiedColumns: number[][];
 };
 
 export type CellPosition = {

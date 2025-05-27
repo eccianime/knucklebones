@@ -1,4 +1,5 @@
 import { TouchableOpacityProps } from 'react-native';
+import { GamePhaseEnum } from '../redux/slices/types';
 
 export type RibbonButtonProps = TouchableOpacityProps & {
   isSelected?: boolean;
@@ -9,8 +10,11 @@ export type GameBackgroundProps = {
   children: React.ReactNode;
 };
 
+export type UserTypeProps = 'user' | 'ai';
+
 export type DiceBoardProps = {
-  type: 'ai' | 'user';
+  type: UserTypeProps;
+  occupiedColumns: number[][];
 };
 
 export type DiceColumnPointsProps = {
@@ -18,5 +22,20 @@ export type DiceColumnPointsProps = {
 };
 
 export type DiceBoxProps = {
-  type: 'ai' | 'user';
+  type: UserTypeProps;
+  currentPhase: GamePhaseEnum;
+  currentPlayer: UserTypeProps | null;
+};
+
+export type DiceRollerProps = {
+  handleRollNumber: (rollNumber: number) => void;
+};
+
+export type DiceProps = {
+  currentNumber: number;
+};
+
+export type UserSelectableAreaProps = {
+  type: UserTypeProps;
+  children: React.ReactNode;
 };
