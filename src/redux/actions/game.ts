@@ -1,11 +1,16 @@
-import { getLastNonZeroRow } from '@/src/config/utils';
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { UserTypeProps } from '@/src/components/types';
+import {
+  getLastNonZeroRow,
+  removeRemoveRepeatedCells,
+} from '@/src/config/utils';
+import { createAsyncThunk, ThunkDispatch } from '@reduxjs/toolkit';
 import {
   selectCurrentPlayer,
   setCellValue,
   setCurrentDice,
   setIsDiceRolling,
   setPhase,
+  updateOccupiedColumns,
 } from '../slices/game';
 import { GamePhaseEnum } from '../slices/types';
 import { RootState } from '../store';
@@ -96,16 +101,49 @@ export const setUserBehaviour = createAsyncThunk<
 
 export const placeDice = createAsyncThunk<
   void,
-  { row: number; col: number; type: 'ai' | 'user'; rollNumber: number }
+  { row: number; col: number; type: 'ai' | 'user'; rollNumber: number },
+  { dispatch: ThunkDispatch<RootState, unknown, any> }
 >('placeDice', ({ row, col, type, rollNumber }, { dispatch }) => {
   dispatch(setPhase(GamePhaseEnum.PLACE_DICE));
   dispatch(setCellValue({ type, row, col, value: rollNumber }));
 
   dispatch(setPhase(GamePhaseEnum.SELECT_CURRENT_PLAYER));
   dispatch(setCurrentDice(0));
-  const nextPlayer = type === 'ai' ? 'user' : 'ai';
+
+  const nextPlayer: UserTypeProps = type === 'ai' ? 'user' : 'ai';
+
   dispatch(selectCurrentPlayer(nextPlayer));
-  if (nextPlayer === 'ai') {
-    dispatch(rollDice());
-  }
+  setTimeout(() => {
+    dispatch(checkCellsDeletion({ nextPlayer, col, rollNumber }));
+
+    if (nextPlayer === 'ai') {
+      dispatch(rollDice());
+    }
+  }, 2000);
 });
+
+export const checkCellsDeletion = createAsyncThunk<
+  void,
+  { rollNumber: number; nextPlayer: UserTypeProps; col: number },
+  { state: RootState; dispatch: ThunkDispatch<RootState, unknown, any> }
+>(
+  'checkCellsDeletion',
+  ({ rollNumber, nextPlayer, col }, { getState, dispatch }) => {
+    const { aiOccupiedColumns, userOccupiedColumns } = getState().game;
+
+    let targetArray;
+    if (nextPlayer === 'user') {
+      targetArray = userOccupiedColumns;
+    } else {
+      targetArray = aiOccupiedColumns;
+    }
+    const updatedArray = removeRemoveRepeatedCells(
+      targetArray,
+      col,
+      rollNumber
+    );
+    dispatch(
+      updateOccupiedColumns({ type: nextPlayer, columns: updatedArray })
+    );
+  }
+);

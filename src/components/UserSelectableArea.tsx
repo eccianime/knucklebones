@@ -3,16 +3,20 @@ import Animated, {
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
+  withTiming,
 } from 'react-native-reanimated';
 import { DICE_SPACE_WIDTH } from '../config/utils';
 import { setUserBehaviour } from '../redux/actions/game';
-import { useAppDispatch } from '../redux/store';
+import { GamePhaseEnum } from '../redux/slices/types';
+import { useAppDispatch, useAppSelector } from '../redux/store';
 import { UserSelectableAreaProps } from './types';
 
 export default function UserSelectableArea({
   children,
   type,
 }: UserSelectableAreaProps) {
+  const { currentPhase, currentPlayer } = useAppSelector((state) => state.game);
+
   const opacity1 = useSharedValue(0);
   const opacity2 = useSharedValue(0);
   const opacity3 = useSharedValue(0);
@@ -25,17 +29,15 @@ export default function UserSelectableArea({
   const scales = [scale1, scale2, scale3];
 
   const handlePress = (index: number) => {
-    // console.log(index);
-
-    // opacities[index].value = withTiming(1, { duration: 500 });
-    // scales[index].value = withTiming(1.1, { duration: 500 });
-
-    // setTimeout(() => {
-    //   opacities[index].value = withTiming(0, { duration: 500 });
-    //   scales[index].value = withTiming(0.8, { duration: 500 });
-    // }, 500);
-
-    runOnJS(selectColumn)(index);
+    if (currentPhase !== GamePhaseEnum.ROLL_DICE || currentPlayer !== 'user')
+      return;
+    opacities[index].value = withTiming(1, { duration: 500 });
+    scales[index].value = withTiming(1.1, { duration: 500 });
+    setTimeout(() => {
+      opacities[index].value = withTiming(0, { duration: 500 });
+      scales[index].value = withTiming(0.8, { duration: 500 });
+      runOnJS(selectColumn)(index);
+    }, 500);
   };
 
   const dispatch = useAppDispatch();
@@ -50,12 +52,12 @@ export default function UserSelectableArea({
   }));
 
   const animatedStyles2 = useAnimatedStyle(() => ({
-    opacity: opacity1.value,
-    transform: [{ scale: scale1.value }],
+    opacity: opacity2.value,
+    transform: [{ scale: scale2.value }],
   }));
   const animatedStyles3 = useAnimatedStyle(() => ({
-    opacity: opacity1.value,
-    transform: [{ scale: scale1.value }],
+    opacity: opacity3.value,
+    transform: [{ scale: scale3.value }],
   }));
 
   const animatedStylesArray = [

@@ -70,3 +70,28 @@ export const getLastNonZeroRow = (
 
   return index;
 };
+
+export const removeRemoveRepeatedCells = (
+  matrix: number[][],
+  col: number,
+  rowNumber: number
+) => {
+  const newMatrix = matrix.map((row) => [...row]);
+
+  let foundValue;
+  do {
+    foundValue = false;
+    for (let row = newMatrix.length - 1; row >= 0; row--) {
+      if (newMatrix[row][col] === rowNumber) {
+        foundValue = true;
+        for (let i = row; i > 0; i--) {
+          newMatrix[i][col] = newMatrix[i - 1][col];
+        }
+        newMatrix[0][col] = 0;
+        break;
+      }
+    }
+  } while (foundValue);
+
+  return newMatrix;
+};

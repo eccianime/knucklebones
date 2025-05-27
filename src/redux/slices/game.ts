@@ -19,7 +19,12 @@ const gameSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     setPhase: (state, action: PayloadAction<GamePhaseEnum>) => {
-      console.log({ state0: state.currentPhase, state1: action.payload });
+      console.log(
+        '------> FROM: ',
+        state.currentPhase,
+        '\n------------------> TO: ',
+        action.payload
+      );
       state.currentPhase = action.payload;
     },
     selectCurrentPlayer: (state, action: PayloadAction<'user' | 'ai'>) => {
@@ -49,6 +54,16 @@ const gameSlice = createSlice({
           action.payload.value;
       }
     },
+    updateOccupiedColumns: (
+      state,
+      action: PayloadAction<{ type: 'ai' | 'user'; columns: number[][] }>
+    ) => {
+      if (action.payload.type === 'ai') {
+        state.aiOccupiedColumns = action.payload.columns;
+      } else {
+        state.userOccupiedColumns = action.payload.columns;
+      }
+    },
   },
 });
 
@@ -58,5 +73,6 @@ export const {
   setIsDiceRolling,
   setCurrentDice,
   setCellValue,
+  updateOccupiedColumns,
 } = gameSlice.actions;
 export default gameSlice.reducer;
