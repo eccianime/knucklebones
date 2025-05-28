@@ -71,27 +71,63 @@ export const getLastNonZeroRow = (
   return index;
 };
 
-export const removeRemoveRepeatedCells = (
+export const removeRepeatedCells = (
   matrix: number[][],
   col: number,
-  rowNumber: number
+  rowNumber: number,
+  direction: 'up' | 'down' = 'up'
 ) => {
   const newMatrix = matrix.map((row) => [...row]);
 
   let foundValue;
   do {
     foundValue = false;
-    for (let row = newMatrix.length - 1; row >= 0; row--) {
-      if (newMatrix[row][col] === rowNumber) {
-        foundValue = true;
-        for (let i = row; i > 0; i--) {
-          newMatrix[i][col] = newMatrix[i - 1][col];
+
+    if (direction === 'up') {
+      for (let row = newMatrix.length - 1; row >= 0; row--) {
+        if (newMatrix[row][col] === rowNumber) {
+          foundValue = true;
+
+          for (let i = row; i > 0; i--) {
+            newMatrix[i][col] = newMatrix[i - 1][col];
+          }
+
+          newMatrix[0][col] = 0;
+          break;
         }
-        newMatrix[0][col] = 0;
-        break;
+      }
+    } else {
+      for (let row = 0; row < newMatrix.length; row++) {
+        if (newMatrix[row][col] === rowNumber) {
+          foundValue = true;
+
+          for (let i = row; i < newMatrix.length - 1; i++) {
+            newMatrix[i][col] = newMatrix[i + 1][col];
+          }
+
+          newMatrix[newMatrix.length - 1][col] = 0;
+          break;
+        }
       }
     }
   } while (foundValue);
 
   return newMatrix;
+};
+
+export const delayToResolve = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
+
+export const getRandomAvailableColumn = (
+  occupiedColumns: number[][]
+): number => {
+  const availableColumns = occupiedColumns[0]
+    .map((val, idx) => (val === 0 ? idx : -1))
+    .filter((idx) => idx !== -1);
+
+  if (availableColumns.length > 0) {
+    const randIdx = Math.floor(Math.random() * availableColumns.length);
+    return availableColumns[randIdx];
+  }
+  return Math.floor(Math.random() * 3);
 };

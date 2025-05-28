@@ -1,7 +1,7 @@
 import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 import AIDiceBoxImage from '../assets/images/dice_box_ai.png';
 import UserDiceBoxImage from '../assets/images/dice_box_user.png';
-import { rollDice, setAIBehaivour } from '../redux/actions/game';
+import { rollDice, setAIBehaviour } from '../redux/actions/game';
 import { setCurrentDice } from '../redux/slices/game';
 import { GamePhaseEnum } from '../redux/slices/types';
 import { useAppDispatch, useAppSelector } from '../redux/store';
@@ -19,7 +19,7 @@ export default function DiceBox({
 
   const handleSetOrSelectValue = (value: number) => {
     if (type === 'ai') {
-      dispatch(setAIBehaivour(value));
+      dispatch(setAIBehaviour(value));
     } else {
       dispatch(setCurrentDice(value));
     }
