@@ -1,5 +1,7 @@
 import { UserTypeProps } from '@/src/components/types';
 import {
+  calculatePoints,
+  checkBoardFull,
   delayToResolve,
   getLastNonZeroRow,
   getRandomAvailableColumn,
@@ -7,11 +9,13 @@ import {
 } from '@/src/config/utils';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
+  resetGame,
   selectCurrentPlayer,
   setCellValue,
   setCurrentDice,
   setIsDiceRolling,
   setPhase,
+  setWinner,
   updateOccupiedColumns,
 } from '../slices/game';
 import { GamePhaseEnum } from '../slices/types';
@@ -31,8 +35,8 @@ export const setCurrentPlayer = createAsyncThunk<
   { currentPlayer: 'user' | 'ai' }
 >('setCurrentPlayer', async ({ currentPlayer }, { dispatch }) => {
   dispatch(setPhase(GamePhaseEnum.SELECT_CURRENT_PLAYER));
-  await delayToResolve(2000);
   dispatch(selectCurrentPlayer(currentPlayer));
+  await delayToResolve(1000);
   if (currentPlayer === 'ai') {
     dispatch(rollDice());
   }
@@ -58,7 +62,7 @@ export const setAIBehaviour = createAsyncThunk<
   const aiColumn = getRandomAvailableColumn(aiOccupiedColumns);
   const row = getLastNonZeroRow(aiOccupiedColumns, aiColumn, 'up');
 
-  await delayToResolve(2000);
+  await delayToResolve(1000);
   dispatch(placeDice({ rollNumber, row, col: aiColumn, type: 'ai' }));
 });
 
@@ -88,7 +92,7 @@ export const setUserBehaviour = createAsyncThunk<
   dispatch(setPhase(GamePhaseEnum.USER_BEHAVIOUR));
   if (rollNumber) {
     dispatch(placeDice({ rollNumber, row, col: column, type: 'user' }));
-    await delayToResolve(1000);
+    // await delayToResolve(1000);
   }
 });
 
@@ -100,17 +104,30 @@ export const placeDice = createAsyncThunk<
   dispatch(setPhase(GamePhaseEnum.PLACE_DICE));
   dispatch(setCellValue({ type, row, col, value: rollNumber }));
 
-  dispatch(setPhase(GamePhaseEnum.SELECT_CURRENT_PLAYER));
   dispatch(setCurrentDice(0));
 
   const nextPlayer: UserTypeProps = type === 'ai' ? 'user' : 'ai';
-  dispatch(selectCurrentPlayer(nextPlayer));
-
   dispatch(checkCellsDeletion({ nextPlayer, col, rollNumber }));
-  await delayToResolve(2000);
 
-  if (nextPlayer === 'ai') {
-    dispatch(rollDice());
+  const {
+    payload: { isGameOver, aiPoints, userPoints },
+  } = await dispatch(checkWinningConditions());
+
+  if (isGameOver) {
+    dispatch(
+      setWinner(
+        aiPoints === userPoints ? 'tie' : aiPoints > userPoints ? 'ai' : 'user'
+      )
+    );
+    dispatch(setPhase(GamePhaseEnum.GAME_OVER));
+  } else {
+    dispatch(setPhase(GamePhaseEnum.SELECT_CURRENT_PLAYER));
+    dispatch(selectCurrentPlayer(nextPlayer));
+
+    await delayToResolve(2000);
+    if (nextPlayer === 'ai') {
+      dispatch(rollDice());
+    }
   }
 });
 
@@ -121,6 +138,7 @@ export const checkCellsDeletion = createAsyncThunk<
 >(
   'checkCellsDeletion',
   ({ rollNumber, nextPlayer, col }, { getState, dispatch }) => {
+    dispatch(setPhase(GamePhaseEnum.CHECK_DICE_MATCHES));
     const { aiOccupiedColumns, userOccupiedColumns } = getState().game;
 
     const targetArray =
@@ -136,5 +154,36 @@ export const checkCellsDeletion = createAsyncThunk<
     dispatch(
       updateOccupiedColumns({ type: nextPlayer, columns: updatedArray })
     );
+  }
+);
+
+export const checkWinningConditions = createAsyncThunk<
+  { isGameOver: boolean; aiPoints: number; userPoints: number },
+  void,
+  { state: RootState; dispatch: any }
+>('checkWinningConditions', async (_, { getState, dispatch }) => {
+  dispatch(setPhase(GamePhaseEnum.CHECK_WINNING_CONDITIONS));
+  const { aiOccupiedColumns, userOccupiedColumns } = getState().game;
+
+  const isAiBoardFull = checkBoardFull(aiOccupiedColumns);
+  const isUserBoardFull = checkBoardFull(userOccupiedColumns);
+
+  const aiPoints = calculatePoints(aiOccupiedColumns).reduce(
+    (prev, curr) => prev + curr
+  );
+  const userPoints = calculatePoints(userOccupiedColumns).reduce(
+    (prev, curr) => prev + curr
+  );
+
+  const isGameOver = isAiBoardFull || isUserBoardFull;
+
+  return { isGameOver, aiPoints, userPoints };
+});
+
+export const restartGame = createAsyncThunk<void, void, { dispatch: any }>(
+  'restartGame',
+  async (_, { dispatch }) => {
+    dispatch(resetGame());
+    dispatch(selectFirstPlayer());
   }
 );

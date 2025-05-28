@@ -1,3 +1,5 @@
+import { UserTypeProps } from '@/src/components/types';
+
 export enum GamePhaseEnum {
   MENU = 'MENU',
   SELECT_FIRST_PLAYER = 'SELECT_FIRST_PLAYER',
@@ -8,9 +10,7 @@ export enum GamePhaseEnum {
   SELECT_COLUMN = 'SELECT_COLUMN',
   PLACE_DICE = 'PLACE_DICE',
   CHECK_DICE_MATCHES = 'CHECK_DICE_MATCHES',
-  ELIMINATE_DICE_MATCHES = 'ELIMINATE_DICE_MATCHES',
-  CALCULATE_POINTS = 'CALCULATE_POINTS',
-  CHECK_FULL_BOARD = 'CHECK_FULL_BOARD',
+  CHECK_WINNING_CONDITIONS = 'CHECK_WINNING_CONDITIONS',
   GAME_OVER = 'GAME_OVER',
 }
 
@@ -21,6 +21,7 @@ export type GameStateProps = {
   currentDice: number | null;
   aiOccupiedColumns: number[][];
   userOccupiedColumns: number[][];
+  winner: UserTypeProps | 'tie' | null;
 };
 
 export type CellPosition = {

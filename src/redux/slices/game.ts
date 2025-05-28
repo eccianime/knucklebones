@@ -12,6 +12,7 @@ const INITIAL_STATE: GameStateProps = {
   currentDice: null,
   aiOccupiedColumns: EMPTY_POINTS,
   userOccupiedColumns: EMPTY_POINTS,
+  winner: null,
 };
 
 const gameSlice = createSlice({
@@ -19,12 +20,7 @@ const gameSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     setPhase: (state, action: PayloadAction<GamePhaseEnum>) => {
-      console.log(
-        '------> FROM: ',
-        state.currentPhase,
-        '\n------------------> TO: ',
-        action.payload
-      );
+      console.log(action.payload);
       state.currentPhase = action.payload;
     },
     selectCurrentPlayer: (state, action: PayloadAction<'user' | 'ai'>) => {
@@ -64,6 +60,10 @@ const gameSlice = createSlice({
         state.userOccupiedColumns = action.payload.columns;
       }
     },
+    setWinner: (state, action: PayloadAction<'ai' | 'user' | 'tie'>) => {
+      state.winner = action.payload;
+    },
+    resetGame: (state) => (state = INITIAL_STATE),
   },
 });
 
@@ -74,5 +74,7 @@ export const {
   setCurrentDice,
   setCellValue,
   updateOccupiedColumns,
+  setWinner,
+  resetGame,
 } = gameSlice.actions;
 export default gameSlice.reducer;

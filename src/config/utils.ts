@@ -131,3 +131,7 @@ export const getRandomAvailableColumn = (
   }
   return Math.floor(Math.random() * 3);
 };
+
+export const checkBoardFull = (matrix: number[][]) => {
+  return matrix.every((row) => row.every((cell) => cell > 0));
+};
