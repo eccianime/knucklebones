@@ -9,7 +9,7 @@ import { WrapperProps } from './types';
 
 export default function Wrapper({ children, className }: WrapperProps) {
   return (
-    <View className={'flex-1 bg-black' + className}>
+    <View className={'flex-1 bg-black ' + className}>
       <Image
         source={TopLeftImage}
         className='absolute top-0 left-0 w-[200] h-[144]'
