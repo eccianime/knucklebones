@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { Image, StatusBar, Text, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
 
 import DiceTopImage from '../assets/images/homeDiceTop.png';
 import LogoImage from '../assets/images/logo.png';
@@ -44,11 +44,6 @@ export default function Home() {
 
   return (
     <Wrapper>
-      <StatusBar
-        translucent
-        backgroundColor={'rgba(0, 0, 0, 0)'}
-        barStyle={'light-content'}
-      />
       <View className='flex-1 justify-center items-center gap-2'>
         <Image source={DiceTopImage} className='w-[200] h-[34] mb-2' />
         <Text className='font-LaptureSemiBold text-primary-100 text-[40px]'>
