@@ -13,6 +13,7 @@ import bgAudio from '../assets/sounds/bg_sound.aac';
 import diceAudio from '../assets/sounds/dice.wav';
 import loserAudio from '../assets/sounds/lose.wav';
 import placeDiceAudio from '../assets/sounds/place_die.wav';
+import selectAudio from '../assets/sounds/select.wav';
 import winnerAudio from '../assets/sounds/win.wav';
 
 type AudioControls = {
@@ -20,6 +21,7 @@ type AudioControls = {
   playPlaceDice: () => void;
   playWinner: () => void;
   playLoser: () => void;
+  playSelect: () => void;
   playBg: () => Promise<void>;
   stopBg: () => Promise<void>;
 };
@@ -67,6 +69,10 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
   );
   const playLoser = useCallback(
     () => playSound('loser', loserAudio),
+    [playSound]
+  );
+  const playSelect = useCallback(
+    () => playSound('select', selectAudio),
     [playSound]
   );
 
@@ -120,7 +126,15 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AudioContext.Provider
-      value={{ playDice, playPlaceDice, playWinner, playLoser, playBg, stopBg }}
+      value={{
+        playDice,
+        playPlaceDice,
+        playWinner,
+        playLoser,
+        playBg,
+        stopBg,
+        playSelect,
+      }}
     >
       {children}
     </AudioContext.Provider>

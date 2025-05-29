@@ -33,6 +33,7 @@ export type DiceRollerProps = {
 
 export type DiceProps = {
   currentNumber: number;
+  color: 'normal' | 'yellow' | 'blue';
 };
 
 export type UserSelectableAreaProps = {

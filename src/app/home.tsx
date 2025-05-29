@@ -42,7 +42,11 @@ export default function Home() {
 
   return (
     <ImageBackground resizeMode='cover' source={HomeImage} className='flex-1'>
-      <StatusBar barStyle={'light-content'} />
+      <StatusBar
+        translucent
+        backgroundColor={'rgba(0, 0, 0, 0)'}
+        barStyle={'light-content'}
+      />
       <View className='absolute top-[50%] self-center'>
         <RibbonButton onPress={handlePressPlay} isSelected title='Play' />
         <RibbonButton onPress={handlePressHowTo} title='How to Play' />

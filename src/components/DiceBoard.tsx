@@ -1,6 +1,10 @@
 import { useRef } from 'react';
 import { findNodeHandle, UIManager, View } from 'react-native';
-import { calculatePoints, DICE_SPACE_WIDTH } from '../config/utils';
+import {
+  calculatePoints,
+  checkDiceColor,
+  DICE_SPACE_WIDTH,
+} from '../config/utils';
 import { setCellPosition } from '../redux/slices/internal';
 import { CellPosition } from '../redux/slices/types';
 import { useAppDispatch } from '../redux/store';
@@ -58,7 +62,14 @@ export default function DiceBoard({ type, occupiedColumns }: DiceBoardProps) {
                     }}
                   >
                     {occupiedColumns[row][col] > 0 && (
-                      <Dice currentNumber={occupiedColumns[row][col]} />
+                      <Dice
+                        currentNumber={occupiedColumns[row][col]}
+                        color={checkDiceColor(
+                          occupiedColumns,
+                          col,
+                          occupiedColumns[row][col]
+                        )}
+                      />
                     )}
                   </View>
                 ))}

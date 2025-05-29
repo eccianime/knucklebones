@@ -1,4 +1,5 @@
 import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AIDiceBoxImage from '../assets/images/dice_box_ai.png';
 import UserDiceBoxImage from '../assets/images/dice_box_user.png';
 import { useAudio } from '../hooks/useAudio';
@@ -31,11 +32,15 @@ export default function DiceBox({
   const handleUserRoll = () => {
     dispatch(rollDice());
   };
+
+  const { top, bottom } = useSafeAreaInsets();
   return (
     <View
-      className={`self-center absolute ${
-        type === 'ai' ? 'top-[60]' : 'bottom-[30]'
-      }`}
+      className={`self-center absolute`}
+      style={{
+        top: type === 'ai' ? top + 20 : undefined,
+        bottom: type === 'user' ? bottom + 20 : undefined,
+      }}
     >
       <ImageBackground
         source={type === 'ai' ? AIDiceBoxImage : UserDiceBoxImage}

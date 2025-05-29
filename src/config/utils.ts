@@ -135,3 +135,21 @@ export const getRandomAvailableColumn = (
 export const checkBoardFull = (matrix: number[][]) => {
   return matrix.every((row) => row.every((cell) => cell > 0));
 };
+
+export const checkDiceColor = (array: number[][], col: number, x: number) => {
+  let count = 0;
+
+  for (let i = 0; i < array.length; i++) {
+    if (array[i][col] === x) {
+      count++;
+    }
+  }
+
+  if (count === 3) {
+    return 'blue';
+  } else if (count === 2) {
+    return 'yellow';
+  } else {
+    return 'normal';
+  }
+};

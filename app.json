@@ -9,7 +9,7 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.ingjeanpaulrojas.knucklebones-app",
       "splash": {
         "image": "./src/assets/images/splash.png",
@@ -19,11 +19,12 @@
     "android": {
       "splash": {
         "image": "./src/assets/images/splash.png",
-        "resizeMode": "cover"
+        "resizeMode": "cover",
+        "backgroundColor": "#000000"
       },
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
       "permissions": [
@@ -52,6 +53,12 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9f53af5a-59f9-43ac-bd71-a0fa36b7f568"
+      }
+    },
+    "owner": "ingjeanpaulrojas"
   }
 }
