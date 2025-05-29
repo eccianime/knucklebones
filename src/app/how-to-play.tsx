@@ -1,11 +1,11 @@
 import { router } from 'expo-router';
 import { useRef, useState } from 'react';
-import { FlatList, Image, ImageBackground, Text, View } from 'react-native';
-import BackgroundImage from '../assets/images/bg.png';
+import { FlatList, Image, Text, View } from 'react-native';
 import HowTo1Image from '../assets/images/how_to_1.png';
 import HowTo2Image from '../assets/images/how_to_2.png';
 import TitleImage from '../assets/images/how_to_title.png';
 import RibbonButton from '../components/RibbonButton';
+import Wrapper from '../components/Wrapper';
 import { SCREEN_WIDTH } from '../config/utils';
 
 const instructionData = [
@@ -45,11 +45,7 @@ export default function HowToPlay() {
   };
 
   return (
-    <ImageBackground
-      resizeMode='cover'
-      source={BackgroundImage}
-      className='flex-1 p-6'
-    >
+    <Wrapper className='p-6'>
       <Image source={TitleImage} className='my-[50] mx-auto h-[50] w-[300]' />
       <FlatList
         data={instructionData}
@@ -82,6 +78,6 @@ export default function HowToPlay() {
           </>
         )}
       </View>
-    </ImageBackground>
+    </Wrapper>
   );
 }

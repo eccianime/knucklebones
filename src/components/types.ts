@@ -40,3 +40,8 @@ export type UserSelectableAreaProps = {
   type: UserTypeProps;
   children: React.ReactNode;
 };
+
+export type WrapperProps = {
+  children: React.ReactNode;
+  className?: string;
+};

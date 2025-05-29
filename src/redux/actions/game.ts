@@ -94,7 +94,7 @@ export const setUserBehaviour = createAsyncThunk<
   }
 });
 
-export const placeDice = createAsyncThunk<
+const placeDice = createAsyncThunk<
   void,
   { row: number; col: number; type: 'ai' | 'user'; rollNumber: number },
   { dispatch: any }
@@ -129,7 +129,7 @@ export const placeDice = createAsyncThunk<
   }
 });
 
-export const checkCellsDeletion = createAsyncThunk<
+const checkCellsDeletion = createAsyncThunk<
   void,
   { rollNumber: number; nextPlayer: UserTypeProps; col: number },
   { state: RootState }
@@ -155,7 +155,7 @@ export const checkCellsDeletion = createAsyncThunk<
   }
 );
 
-export const checkWinningConditions = createAsyncThunk<
+const checkWinningConditions = createAsyncThunk<
   { isGameOver: boolean; aiPoints: number; userPoints: number },
   void,
   { state: RootState; dispatch: any }

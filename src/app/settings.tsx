@@ -1,15 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import {
-  Image,
-  ImageBackground,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import BackgroundImage from '../assets/images/bg.png';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import TitleSettingsImage from '../assets/images/settings_title.png';
 import RibbonButton from '../components/RibbonButton';
+import Wrapper from '../components/Wrapper';
 import { useAudio } from '../hooks/useAudio';
 import {
   setDifficulty,
@@ -44,11 +38,7 @@ export default function Settings() {
     dispatch(setDifficulty(difficulty === 'Easy' ? 'Intelligent' : 'Easy'));
   };
   return (
-    <ImageBackground
-      resizeMode='cover'
-      source={BackgroundImage}
-      className='flex-1 p-6 '
-    >
+    <Wrapper className='p-6'>
       <Image
         source={TitleSettingsImage}
         className='mt-12 mb-5 mx-auto h-[50] w-[260]'
@@ -101,6 +91,6 @@ export default function Settings() {
           <RibbonButton isSelected title='Go back' onPress={handleGoBack} />
         </View>
       </View>
-    </ImageBackground>
+    </Wrapper>
   );
 }

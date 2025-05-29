@@ -1,24 +1,13 @@
 import { router } from 'expo-router';
-import {
-  Image,
-  ImageBackground,
-  Linking,
-  ScrollView,
-  Text,
-  View,
-} from 'react-native';
+import { Image, Linking, ScrollView, Text, View } from 'react-native';
 import TitleAboutImage from '../assets/images/about_title.png';
-import BackgroundImage from '../assets/images/bg.png';
 import RibbonButton from '../components/RibbonButton';
+import Wrapper from '../components/Wrapper';
 
 export default function About() {
   const handleGoBack = () => router.back();
   return (
-    <ImageBackground
-      resizeMode='cover'
-      source={BackgroundImage}
-      className='flex-1 p-6 '
-    >
+    <Wrapper className='p-6'>
       <Image
         source={TitleAboutImage}
         className='mt-12 mb-5 mx-auto h-[50] w-[230]'
@@ -60,6 +49,6 @@ export default function About() {
       <View className='items-center'>
         <RibbonButton isSelected title='Go back' onPress={handleGoBack} />
       </View>
-    </ImageBackground>
+    </Wrapper>
   );
 }

@@ -1,11 +1,13 @@
 import { router } from 'expo-router';
-import { ImageBackground, StatusBar, Text, View } from 'react-native';
+import { Image, StatusBar, Text, View } from 'react-native';
 
-import HomeImage from '../assets/images/home.png';
+import DiceTopImage from '../assets/images/homeDiceTop.png';
+import LogoImage from '../assets/images/logo.png';
 
 import RibbonButton from '../components/RibbonButton';
 
 import { useEffect } from 'react';
+import Wrapper from '../components/Wrapper';
 import { useAudio } from '../hooks/useAudio';
 import { selectFirstPlayer } from '../redux/actions/game';
 import { resetGame } from '../redux/slices/game';
@@ -41,21 +43,26 @@ export default function Home() {
   }, [isVolumeOn]);
 
   return (
-    <ImageBackground resizeMode='cover' source={HomeImage} className='flex-1'>
+    <Wrapper>
       <StatusBar
         translucent
         backgroundColor={'rgba(0, 0, 0, 0)'}
         barStyle={'light-content'}
       />
-      <View className='absolute top-[50%] self-center'>
+      <View className='flex-1 justify-center items-center gap-2'>
+        <Image source={DiceTopImage} className='w-[200] h-[34] mb-2' />
+        <Text className='font-LaptureSemiBold text-primary-100 text-[40px]'>
+          KNUCKLEBONES
+        </Text>
+        <Image source={LogoImage} className='w-[60] h-[60] mb-[50]' />
         <RibbonButton onPress={handlePressPlay} isSelected title='Play' />
         <RibbonButton onPress={handlePressHowTo} title='How to Play' />
         <RibbonButton onPress={handlePressSettings} title='Settings' />
         <RibbonButton onPress={handlePressAbout} title='About' />
       </View>
-      <Text className='absolute bottom-0 mb-10 font-LaptureSemiBold text-primary-200 self-center text-2xl'>
+      <Text className='absolute bottom-0 mb-10 font-LaptureSemiBold text-primary-200 text-2xl self-center'>
         v.{'1.0.0'}
       </Text>
-    </ImageBackground>
+    </Wrapper>
   );
 }

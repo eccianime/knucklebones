@@ -1,8 +1,9 @@
-import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { useEffect } from 'react';
-import { View } from 'react-native';
-import splashImage from '../assets/images/splash.png';
+import { Image, Text, View } from 'react-native';
+import DiceTopImage from '../assets/images/homeDiceTop.png';
+import LogoImage from '../assets/images/logo.png';
+import Wrapper from '../components/Wrapper';
 
 export default function Index() {
   useEffect(() => {
@@ -13,13 +14,14 @@ export default function Index() {
     return () => clearTimeout(timer);
   }, []);
   return (
-    <View className='flex-1 justify-center items-center'>
-      <Image
-        source={splashImage}
-        transition={100}
-        contentFit='cover'
-        style={{ width: '100%', height: '100%' }}
-      />
-    </View>
+    <Wrapper>
+      <View className='flex-1 justify-center items-center gap-2 '>
+        <Image source={DiceTopImage} className='w-[200] h-[34] mb-2' />
+        <Text className='font-LaptureSemiBold text-primary-100 text-[40px]'>
+          KNUCKLEBONES
+        </Text>
+        <Image source={LogoImage} className='w-[60] h-[60] mb-[50]' />
+      </View>
+    </Wrapper>
   );
 }
