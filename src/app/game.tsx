@@ -1,7 +1,7 @@
 import DiceBoard from '../components/DiceBoard';
 import DiceBox from '../components/DiceBox';
-import FirstTurnModal from '../components/FirstTurnModal';
 import GameBackground from '../components/GameBackground';
+import GradientModal from '../components/GradientModal';
 import { useAppSelector } from '../redux/store';
 
 export default function Game() {
@@ -25,7 +25,7 @@ export default function Game() {
         currentPhase={currentPhase}
         currentPlayer={currentPlayer}
       />
-      <FirstTurnModal />
+      <GradientModal />
     </GameBackground>
   );
 }

@@ -8,6 +8,9 @@ const INITIAL_STATE: InternalStateProps = {
   playerCellPosition: Array(3)
     .fill(null)
     .map(() => Array(3).fill(null)),
+  isVolumeOn: true,
+  isSoundOn: true,
+  difficulty: 'Easy',
 };
 
 const internalSlice = createSlice({
@@ -28,8 +31,18 @@ const internalSlice = createSlice({
         col
       ] = position;
     },
+    setIsVolumeOn(state, action: PayloadAction<boolean>) {
+      state.isVolumeOn = action.payload;
+    },
+    setIsSoundOn(state, action: PayloadAction<boolean>) {
+      state.isSoundOn = action.payload;
+    },
+    setDifficulty(state, action: PayloadAction<'Easy' | 'Intelligent'>) {
+      state.difficulty = action.payload;
+    },
   },
 });
 
-export const { setCellPosition } = internalSlice.actions;
+export const { setCellPosition, setIsVolumeOn, setIsSoundOn, setDifficulty } =
+  internalSlice.actions;
 export default internalSlice.reducer;

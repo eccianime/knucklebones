@@ -15,7 +15,7 @@ module.exports = {
         },
       },
       fontFamily: {
-        LaptureSemiBold: 'Lapture-Semibold',
+        LaptureSemiBold: 'LaptureSemibold',
       },
     },
   },

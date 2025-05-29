@@ -11,7 +11,7 @@ export default function RibbonButton({
     <TouchableOpacity {...props}>
       <ImageBackground
         source={isSelected ? RibbonImage : null}
-        className='w-[280] h-[80] items-center justify-center'
+        className='w-[260] h-[60] items-center justify-center'
       >
         <Text
           className={`text-2xl font-LaptureSemiBold ${

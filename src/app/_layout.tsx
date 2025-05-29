@@ -13,10 +13,7 @@ export default function RootLayout() {
   if (!fontsLoaded) return null;
   return (
     <Provider store={store}>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name='index' />
-        <Stack.Screen name='game' />
-      </Stack>
+      <Stack screenOptions={{ headerShown: false }} />
     </Provider>
   );
 }

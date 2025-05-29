@@ -32,4 +32,7 @@ export type CellPosition = {
 export type InternalStateProps = {
   aiCellPositions: (CellPosition | null)[][];
   playerCellPosition: (CellPosition | null)[][];
+  isVolumeOn: boolean;
+  isSoundOn: boolean;
+  difficulty: 'Easy' | 'Intelligent';
 };

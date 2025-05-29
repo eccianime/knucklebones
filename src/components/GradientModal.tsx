@@ -18,7 +18,7 @@ cssInterop(LinearGradient, {
   className: 'style',
 });
 
-export default function FirstTurnModal() {
+export default function GradientModal() {
   const {
     currentPhase,
     currentPlayer,
@@ -104,7 +104,9 @@ export default function FirstTurnModal() {
           </Text>
           {winner && (
             <Text
-              className={'text-3xl text-white font-LaptureSemiBold text-center'}
+              className={
+                'text-3xl text-white font-LaptureSemiBold text-center border'
+              }
             >
               {winner === 'tie'
                 ? 'TIE'

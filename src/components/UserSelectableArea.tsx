@@ -88,7 +88,7 @@ export default function UserSelectableArea({
           ))}
       </View>
       {children}
-      <View className='absolute bottom-0 gap-2 flex-row'>
+      <View className='absolute bottom-0 gap-4 flex-row justify-around self-center'>
         {Array(3)
           .fill(null)
           .map((_, index) => (
