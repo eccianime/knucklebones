@@ -9,6 +9,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { calculatePoints, delayToResolve, SCREEN_WIDTH } from '../config/utils';
+import { useAudio } from '../hooks/useAudio';
 import { restartGame, setCurrentPlayer } from '../redux/actions/game';
 import { GamePhaseEnum } from '../redux/slices/types';
 import { useAppDispatch, useAppSelector } from '../redux/store';
@@ -27,6 +28,7 @@ export default function GradientModal() {
     userOccupiedColumns,
   } = useAppSelector((state) => state.game);
   const dispatch = useAppDispatch();
+  const { playWinner, playLoser } = useAudio();
 
   const xPosition = useSharedValue(SCREEN_WIDTH);
   const opacity = useSharedValue(0);
@@ -68,6 +70,16 @@ export default function GradientModal() {
       }
     })();
   }, [currentPhase]);
+
+  useEffect(() => {
+    if (currentPhase === GamePhaseEnum.GAME_OVER) {
+      if (winner === 'user') {
+        playWinner();
+      } else {
+        playLoser();
+      }
+    }
+  }, [currentPhase, winner]);
 
   return (
     <View className='absolute top-[50%]'>

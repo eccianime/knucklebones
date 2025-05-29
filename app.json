@@ -48,12 +48,6 @@
           "resizeMode": "cover",
           "backgroundColor": "#000000"
         }
-      ],
-      [
-        "expo-audio",
-        {
-          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
-        }
       ]
     ],
     "experiments": {

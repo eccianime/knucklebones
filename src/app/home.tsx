@@ -5,12 +5,16 @@ import HomeImage from '../assets/images/home.png';
 
 import RibbonButton from '../components/RibbonButton';
 
+import { useEffect } from 'react';
+import { useAudio } from '../hooks/useAudio';
 import { selectFirstPlayer } from '../redux/actions/game';
 import { resetGame } from '../redux/slices/game';
-import { useAppDispatch } from '../redux/store';
+import { useAppDispatch, useAppSelector } from '../redux/store';
 
 export default function Home() {
   const dispatch = useAppDispatch();
+  const { isVolumeOn } = useAppSelector((state) => state.internal);
+  const { playBg } = useAudio();
 
   const handlePressPlay = () => {
     router.push('/game');
@@ -29,6 +33,12 @@ export default function Home() {
   const handlePressAbout = () => {
     router.push('/about');
   };
+
+  useEffect(() => {
+    if (isVolumeOn) {
+      playBg();
+    }
+  }, [isVolumeOn]);
 
   return (
     <ImageBackground resizeMode='cover' source={HomeImage} className='flex-1'>

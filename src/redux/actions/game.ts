@@ -62,7 +62,6 @@ export const setAIBehaviour = createAsyncThunk<
   const aiColumn = getRandomAvailableColumn(aiOccupiedColumns);
   const row = getLastNonZeroRow(aiOccupiedColumns, aiColumn, 'up');
 
-  await delayToResolve(1000);
   dispatch(placeDice({ rollNumber, row, col: aiColumn, type: 'ai' }));
 });
 
@@ -92,7 +91,6 @@ export const setUserBehaviour = createAsyncThunk<
   dispatch(setPhase(GamePhaseEnum.USER_BEHAVIOUR));
   if (rollNumber) {
     dispatch(placeDice({ rollNumber, row, col: column, type: 'user' }));
-    // await delayToResolve(1000);
   }
 });
 

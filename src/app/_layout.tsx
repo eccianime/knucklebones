@@ -2,7 +2,8 @@ import '../../global.css';
 
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
-import { Provider } from 'react-redux';
+import { Provider as ReduxProvider } from 'react-redux';
+import { AudioProvider } from '../hooks/useAudio';
 import store from '../redux/store';
 
 export default function RootLayout() {
@@ -12,8 +13,10 @@ export default function RootLayout() {
 
   if (!fontsLoaded) return null;
   return (
-    <Provider store={store}>
-      <Stack screenOptions={{ headerShown: false }} />
-    </Provider>
+    <ReduxProvider store={store}>
+      <AudioProvider>
+        <Stack screenOptions={{ headerShown: false, animation: 'fade' }} />
+      </AudioProvider>
+    </ReduxProvider>
   );
 }

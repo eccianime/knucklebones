@@ -1,6 +1,7 @@
 import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 import AIDiceBoxImage from '../assets/images/dice_box_ai.png';
 import UserDiceBoxImage from '../assets/images/dice_box_user.png';
+import { useAudio } from '../hooks/useAudio';
 import { rollDice, setAIBehaviour } from '../redux/actions/game';
 import { setCurrentDice } from '../redux/slices/game';
 import { GamePhaseEnum } from '../redux/slices/types';
@@ -16,9 +17,11 @@ export default function DiceBox({
 }: DiceBoxProps) {
   const { isDiceRolling, currentDice } = useAppSelector((state) => state.game);
   const dispatch = useAppDispatch();
+  const { playPlaceDice } = useAudio();
 
   const handleSetOrSelectValue = (value: number) => {
     if (type === 'ai') {
+      playPlaceDice();
       dispatch(setAIBehaviour(value));
     } else {
       dispatch(setCurrentDice(value));

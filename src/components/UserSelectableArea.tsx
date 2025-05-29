@@ -6,6 +6,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { DICE_SPACE_WIDTH } from '../config/utils';
+import { useAudio } from '../hooks/useAudio';
 import { setUserBehaviour } from '../redux/actions/game';
 import { GamePhaseEnum } from '../redux/slices/types';
 import { useAppDispatch, useAppSelector } from '../redux/store';
@@ -16,6 +17,7 @@ export default function UserSelectableArea({
   type,
 }: UserSelectableAreaProps) {
   const { currentPhase, currentPlayer } = useAppSelector((state) => state.game);
+  const { playPlaceDice } = useAudio();
 
   const opacity1 = useSharedValue(0);
   const opacity2 = useSharedValue(0);
@@ -43,6 +45,7 @@ export default function UserSelectableArea({
   const dispatch = useAppDispatch();
 
   const selectColumn = (column: number) => {
+    playPlaceDice();
     dispatch(setUserBehaviour(column));
   };
 

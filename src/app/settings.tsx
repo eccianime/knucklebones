@@ -10,6 +10,7 @@ import {
 import BackgroundImage from '../assets/images/bg.png';
 import TitleSettingsImage from '../assets/images/settings_title.png';
 import RibbonButton from '../components/RibbonButton';
+import { useAudio } from '../hooks/useAudio';
 import {
   setDifficulty,
   setIsSoundOn,
@@ -22,10 +23,19 @@ export default function Settings() {
   const { isVolumeOn, isSoundOn, difficulty } = useAppSelector(
     (state) => state.internal
   );
+
+  const { stopBg, playBg } = useAudio();
+
   const dispatch = useAppDispatch();
 
-  const handleSetVolumeOn = () => {
-    dispatch(setIsVolumeOn(!isVolumeOn));
+  const toggleVolume = () => {
+    const newVolumeOn = !isVolumeOn;
+    dispatch(setIsVolumeOn(newVolumeOn));
+    if (newVolumeOn) {
+      playBg();
+    } else {
+      stopBg();
+    }
   };
   const handleSetSoundOn = () => {
     dispatch(setIsSoundOn(!isSoundOn));
@@ -67,7 +77,7 @@ export default function Settings() {
           <Text className='font-LaptureSemiBold text-primary-200 text-2xl'>
             Music
           </Text>
-          <TouchableOpacity onPress={handleSetVolumeOn} className='p-4'>
+          <TouchableOpacity onPress={toggleVolume} className='p-4'>
             <Ionicons
               name={isVolumeOn ? 'volume-high' : 'volume-mute'}
               size={24}
