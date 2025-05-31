@@ -21,7 +21,7 @@ To run this project, make sure you have React Native set up on your machine. If 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/knucklebones-game.git
+   git clone https://github.com/eccianime/knucklebones.git
    cd knucklebones-game
    ```
 
