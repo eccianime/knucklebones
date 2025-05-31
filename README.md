@@ -1,50 +1,59 @@
-# Welcome to your Expo app 👋
+# Knucklebones Game (React Native)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is a **Knucklebones** minigame replica from the game _Cult of the Lamb_, built entirely with **React Native**—without using any game engines like Unity or Godot.  
+The goal of this project was to explore the capabilities of React Native beyond traditional applications, and prove that it's possible to create simple and fun games using just the core tools of the ecosystem.
 
-## Get started
+## Features
 
-1. Install dependencies
+- **React Native with TypeScript**: Strong typing for better code quality and developer experience.
+- **Reanimated**: For smooth, performant animations.
+- **Redux Toolkit**: For efficient state management across the game.
+- **Custom Hooks**: Encapsulating reusable logic (like audio handling).
+- **Custom Assets**: Game-specific images, sounds, and fonts integrated into the app.
+- **Clean Architecture**: Organized project structure with modular components and screens.
+
+## Installation
+
+To run this project, make sure you have React Native set up on your machine. If not, follow the installation guide from the [React Native Documentation](https://reactnative.dev/docs/environment-setup).
+
+### Steps
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/knucklebones-game.git
+   cd knucklebones-game
+   ```
+
+2. Install dependencies:
 
    ```bash
    npm install
    ```
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+3. Run the app:
 
 ```bash
-npm run reset-project
+npm run android              # For Android
+npm run ios                  # For iOS
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Notes
 
-## Learn more
+- This project was built without any game engines or physics libraries—just React Native and its ecosystem.
 
-To learn more about developing your project with Expo, look at the following resources:
+- All game logic (dice rolling, score rules, interactions) was manually implemented.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- The visual style and game assets are inspired by Cult of the Lamb, used for educational and experimental purposes only.
 
-## Join the community
+## License
 
-Join our community of developers creating universal apps.
+This project is licensed under the MIT License. Feel free to use, modify, and expand this game as a learning resource.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Demo
+
+![Demo](https://github.com/eccianime/knucklebones/blob/master/video.mov)
+
+## Credits
+
+Inspired by the minigame Knucklebones from Cult of the Lamb.
