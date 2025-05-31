@@ -33,10 +33,10 @@ To run this project, make sure you have React Native set up on your machine. If 
 
 3. Run the app:
 
-```bash
-npm run android              # For Android
-npm run ios                  # For iOS
-```
+   ```bash
+   npm run android              # For Android
+   npm run ios                  # For iOS
+   ```
 
 ## Notes
 
@@ -52,7 +52,7 @@ This project is licensed under the MIT License. Feel free to use, modify, and ex
 
 ## Demo
 
-![Demo](https://github.com/eccianime/knucklebones/blob/master/video.mp4)
+https://github.com/user-attachments/assets/1c7b6e1d-5aec-4970-959a-e82a4b5cb58d
 
 ## Credits
 
