@@ -52,7 +52,7 @@ This project is licensed under the MIT License. Feel free to use, modify, and ex
 
 ## Demo
 
-![Demo](https://github.com/eccianime/knucklebones/blob/master/video.mov)
+![Demo](https://github.com/eccianime/knucklebones/blob/master/video.mp4)
 
 ## Credits
 
