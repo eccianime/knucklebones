@@ -1,8 +1,11 @@
 import { router } from 'expo-router';
+import { goBack } from 'expo-router/build/global-state/routing';
 import { useRef, useState } from 'react';
 import { FlatList, Image, Text, View } from 'react-native';
 import HowTo1Image from '../assets/images/how_to_1.png';
 import HowTo2Image from '../assets/images/how_to_2.png';
+import HowTo3Image from '../assets/images/how_to_3.png';
+import HowTo4Image from '../assets/images/how_to_4.png';
 import TitleImage from '../assets/images/how_to_title.png';
 import RibbonButton from '../components/RibbonButton';
 import Wrapper from '../components/Wrapper';
@@ -12,11 +15,20 @@ const instructionData = [
   {
     image: HowTo1Image,
     title:
-      'When dice of the same number are placed in the same column, multiply their value',
+      'When dice of different number are placed in the same column, sum their value',
   },
   {
     image: HowTo2Image,
-    title: 'Destroy your opponents dice by matching yours to theirs',
+    title: 'When 2 dices match, their value is doubled and summed',
+  },
+  {
+    image: HowTo3Image,
+    title: 'When 3 dices match, their value is multiplied by 3 and summed',
+  },
+  {
+    image: HowTo4Image,
+    title:
+      'If your dice match an opponent dice, the dice will be destroyed. Watch out!',
   },
 ];
 
@@ -27,21 +39,25 @@ export default function HowToPlay() {
 
   const handleNext = () => {
     scrollRef.current?.scrollToIndex({
-      index: 1,
+      index: currentIndex + 1,
       animated: true,
     });
-    setCurrentIndex(1);
+    setCurrentIndex(currentIndex + 1);
   };
   const handleDone = () => {
     router.back();
   };
 
   const handleBack = () => {
+    if (currentIndex === 0) {
+      goBack();
+      return;
+    }
     scrollRef.current?.scrollToIndex({
-      index: 0,
+      index: currentIndex - 1,
       animated: true,
     });
-    setCurrentIndex(0);
+    setCurrentIndex(currentIndex - 1);
   };
 
   return (
@@ -68,15 +84,15 @@ export default function HowToPlay() {
         )}
       />
       <View className='items-center justify-center'>
-        {currentIndex === 0 && (
+        {currentIndex < 3 && (
           <RibbonButton isSelected title='Next' onPress={handleNext} />
         )}
-        {currentIndex === 1 && (
+        {currentIndex === 3 && (
           <>
             <RibbonButton isSelected title='Got it' onPress={handleDone} />
-            <RibbonButton title='Back' onPress={handleBack} />
           </>
         )}
+        <RibbonButton title='Back' onPress={handleBack} />
       </View>
     </Wrapper>
   );
